@@ -2,6 +2,7 @@
 
 const _ = require('lodash');
 const { getService } = require('../../utils');
+const fieldMigration = require('./migrations/field');
 
 module.exports = () => {
   Object.values(strapi.models).forEach(model => {
@@ -22,8 +23,5 @@ module.exports = () => {
     }
   });
 
-  strapi.db.migrations.register({
-    before() {},
-    after() {},
-  });
+  strapi.db.migrations.register(fieldMigration);
 };

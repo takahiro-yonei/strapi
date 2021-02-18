@@ -1,6 +1,6 @@
 'use strict';
 
-const { prop } = require('lodash/fp');
+const { prop, difference } = require('lodash/fp');
 const { isRelationalAttribute } = require('strapi-utils').contentTypes;
 
 const isLocalized = modelOrAttribute => {
@@ -14,7 +14,13 @@ const getNonLocalizedFields = model => {
   });
 };
 
+const getLocalizedFields = model => {
+  const nonLocalizedFields = getNonLocalizedFields(model);
+  return difference(Object.keys(model.attributes), nonLocalizedFields);
+};
+
 module.exports = {
   isLocalized,
   getNonLocalizedFields,
+  getLocalizedFields,
 };
